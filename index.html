@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PIC Task-Flow</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <h1>PIC Task-Flow</h1>
+      <p class="login-subtitle">Enter Password</p>
+      <form id="login-form">
+        <input
+          type="password"
+          id="login-password"
+          autocomplete="current-password"
+          required
+        />
+        <p id="login-error" class="login-error"></p>
+        <button type="submit" class="login-btn">Unlock</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div id="app-container" class="app-container hidden">
+    <header>
+      <div class="header-top">
+        <h1>PIC Task-Flow</h1>
+        <div class="header-actions">
+          <button id="notify-perm-btn" class="secondary-btn" title="Enable Browser Notifications">🔔 Enable Alerts</button>
+          <button id="theme-toggle" class="secondary-btn" title="Toggle Dark Mode">🌙 Dark Mode</button>
+          <button id="logout-btn" class="secondary-btn" title="Lock App">🔒 Lock</button>
+        </div>
+      </div>
+
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="todos-tab">To-Do List</button>
+        <button class="tab-btn" data-tab="reminders-tab">Daily Reminders</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- TO-DO LIST SECTION -->
+      <section id="todos-tab" class="tab-content active">
+        <div class="toolbar">
+          <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="active">Active</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+          </div>
+          <div class="date-filter-bar">
+            <select id="filter-month" class="toolbar-select" title="Filter by Month Logged">
+              <option value="all">All</option>
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+            <select id="filter-year" class="toolbar-select" title="Filter by Year Logged">
+              <option value="all">All</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="todo-table">
+            <thead>
+              <tr>
+                <th class="col-no">No.</th>
+                <th class="col-task">Task</th>
+                <th class="col-date-logged">Date Logged</th>
+                <th class="col-details">Details</th>
+                <th class="col-priority">Priority</th>
+                <th class="col-status">Status</th>
+                <th class="col-date-completed">Date Completed</th>
+                <th class="col-notes">Notes</th>
+                <th class="col-action"></th>
+              </tr>
+            </thead>
+            <tbody id="todo-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- DAILY REMINDERS SECTION -->
+      <section id="reminders-tab" class="tab-content">
+        <div class="toolbar">
+          <div class="filter-bar">
+            <button class="rem-filter-btn filter-btn active" data-filter="all">All</button>
+            <button class="rem-filter-btn filter-btn" data-filter="active">Active</button>
+            <button class="rem-filter-btn filter-btn" data-filter="completed">Completed</button>
+          </div>
+          <div class="date-filter-bar">
+            <select id="rem-filter-month" class="toolbar-select" title="Filter by Month Created">
+              <option value="all">All</option>
+              <option value="January">January</option>
+              <option value="February">February</option>
+              <option value="March">March</option>
+              <option value="April">April</option>
+              <option value="May">May</option>
+              <option value="June">June</option>
+              <option value="July">July</option>
+              <option value="August">August</option>
+              <option value="September">September</option>
+              <option value="October">October</option>
+              <option value="November">November</option>
+              <option value="December">December</option>
+            </select>
+            <select id="rem-filter-year" class="toolbar-select" title="Filter by Year Created">
+              <option value="all">All</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="reminder-table">
+            <thead>
+              <tr>
+                <th class="rem-col-no">No.</th>
+                <th class="rem-col-type">Type</th>
+                <th class="rem-col-recurrence">Recurrence</th>
+                <th class="rem-col-time">Time</th>
+                <th class="rem-col-priority">Priority</th>
+                <th class="rem-col-remarks">Remarks</th>
+                <th class="rem-col-status">Status</th>
+                <th class="rem-col-action"></th>
+              </tr>
+            </thead>
+            <tbody id="reminder-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

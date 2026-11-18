@@ -1,0 +1,511 @@
+:root {
+  --bg-color: #f4f6f9;
+  --card-bg: #ffffff;
+  --text-color: #1e293b;
+  --text-muted: #64748b;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --border: #cbd5e1;
+  --danger: #ef4444;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --header-bg: #e2e8f0;
+  --readonly-bg: #f1f5f9;
+
+  /* =========================================================
+     ADJUST TABLE ROW HEIGHT HERE (e.g., 22px, 26px, 32px)
+     ========================================================= */
+  --row-height: 24px;
+
+  /* =========================================================
+     TO-DO TABLE COLUMN WIDTHS (TOTAL = 100%)
+     ========================================================= */
+  --col-no-w: 3.5%;
+  --col-task-w: 18%;
+  --col-date-logged-w: 12%;
+  --col-details-w: 21%;
+  --col-priority-w: 6.5%;
+  --col-status-w: 10.5%;
+  --col-date-completed-w: 12%;
+  --col-notes-w: 14%;
+  --col-action-w: 2.5%;
+
+  /* =========================================================
+     REMINDERS TABLE COLUMN WIDTHS (MATCHED TO TO-DO LIST = 100%)
+     ========================================================= */
+  --rem-col-no-w: var(--col-no-w);                   /* 3.5%  */
+  --rem-col-type-w: var(--col-task-w);               /* 18%   */
+  --rem-col-recurrence-w: var(--col-date-logged-w);  /* 12%   */
+  --rem-col-time-w: var(--col-date-completed-w);     /* 12%   */
+  --rem-col-priority-w: var(--col-priority-w);       /* 6.5%  */
+  --rem-col-remarks-w: calc(var(--col-details-w) + var(--col-notes-w)); /* 35% */
+  --rem-col-status-w: var(--col-status-w);           /* 10.5% */
+  --rem-col-action-w: var(--col-action-w);           /* 2.5%  */
+}
+
+body.dark-mode {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-color: #f8fafc;
+  --text-muted: #94a3b8;
+  --primary: #60a5fa;
+  --primary-hover: #3b82f6;
+  --border: #334155;
+  --header-bg: #0f172a;
+  --readonly-bg: #162032;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.2s, color 0.2s;
+  padding: 20px 28px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* --- LOGIN SCREEN --- */
+.login-screen {
+  min-height: calc(100vh - 40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.login-card h1 {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.login-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#login-password {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  text-align: center;
+  outline: none;
+}
+
+#login-password:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.login-error {
+  color: var(--danger);
+  font-size: 0.82rem;
+  min-height: 16px;
+}
+
+.login-btn {
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+/* --- MAIN APP --- */
+.app-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.secondary-btn {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.secondary-btn:hover {
+  border-color: var(--primary);
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 8px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.tab-btn.active {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-bar,
+.date-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-btn {
+  background: var(--card-bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.filter-btn.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.toolbar-select {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.toolbar-select:hover,
+.toolbar-select:focus {
+  border-color: var(--primary);
+}
+
+/* --- SPREADSHEET TABLE STYLES (TO-DO & REMINDERS) --- */
+.table-wrapper {
+  width: 100%;
+  overflow-x: visible;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#todo-table,
+#reminder-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+#todo-table th,
+#todo-table td,
+#reminder-table th,
+#reminder-table td {
+  border: 1px solid var(--border);
+  padding: 0;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+#todo-table th,
+#reminder-table th {
+  background-color: var(--header-bg);
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 10px 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* To-Do Header Width Assignments */
+.col-no { width: var(--col-no-w); }
+.col-task { width: var(--col-task-w); }
+.col-date-logged { width: var(--col-date-logged-w); }
+.col-details { width: var(--col-details-w); }
+.col-priority { width: var(--col-priority-w); }
+.col-status { width: var(--col-status-w); }
+.col-date-completed { width: var(--col-date-completed-w); }
+.col-notes { width: var(--col-notes-w); }
+.col-action { width: var(--col-action-w); }
+
+/* Reminders Header Width Assignments */
+.rem-col-no { width: var(--rem-col-no-w); }
+.rem-col-type { width: var(--rem-col-type-w); }
+.rem-col-recurrence { width: var(--rem-col-recurrence-w); }
+.rem-col-time { width: var(--rem-col-time-w); }
+.rem-col-priority { width: var(--rem-col-priority-w); }
+.rem-col-remarks { width: var(--rem-col-remarks-w); }
+.rem-col-status { width: var(--rem-col-status-w); }
+.rem-col-action { width: var(--rem-col-action-w); }
+
+/* Greyed out sequence column */
+.cell-no {
+  background-color: var(--readonly-bg);
+  color: var(--text-muted);
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.82rem;
+  user-select: none;
+  height: var(--row-height);
+  line-height: var(--row-height);
+  padding: 0 4px !important;
+}
+
+/* Seamless cell inputs & dropdowns */
+.cell-input,
+.cell-select {
+  width: 100%;
+  height: var(--row-height);
+  line-height: var(--row-height);
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  padding: 0 8px;
+  font-size: 0.85rem;
+  outline: none;
+  transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+/* Multi-line auto-expanding Details, Notes & Remarks textarea */
+.cell-textarea {
+  display: block;
+  width: 100%;
+  height: var(--row-height);
+  min-height: var(--row-height);
+  line-height: 1.3;
+  border: none;
+  background: transparent;
+  color: var(--text-color);
+  padding: 3px 8px;
+  font-size: 0.85rem;
+  outline: none;
+  resize: none;
+  overflow-y: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+/* Center Dates, Priority, Status, Recurrence, and Time outputs */
+.date-logged-input,
+.date-completed-input,
+.priority-select,
+.status-select,
+.recurrence-select,
+.time-input,
+.rem-status-select {
+  text-align: center;
+  text-align-last: center;
+}
+
+.cell-input:focus,
+.cell-select:focus,
+.cell-textarea:focus {
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
+.cell-select option {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  text-align: center;
+}
+
+/* =========================================================
+   PRIORITY COLOR CODING & TEXT-ONLY GLOWING HIGHLIGHTS
+   ========================================================= */
+.priority-high {
+  color: #ef4444;
+  font-weight: 700;
+  background-color: transparent;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.75);
+}
+
+.priority-medium {
+  color: #f59e0b;
+  font-weight: 700;
+  background-color: transparent;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.75);
+}
+
+.priority-low {
+  color: #10b981;
+  font-weight: 700;
+  background-color: transparent;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.75);
+}
+
+/* =========================================================
+   STATUS COLOR CODING & TEXT-ONLY GLOWING HIGHLIGHTS
+   ========================================================= */
+/* Green - Completed / Active */
+.status-Completed,
+.rem-status-Active {
+  color: #10b981;
+  font-weight: 700;
+  background-color: transparent;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+}
+
+/* Orange - In Progress */
+.status-InProgress {
+  color: #f97316;
+  font-weight: 700;
+  background-color: transparent;
+  text-shadow: 0 0 10px rgba(249, 115, 22, 0.8);
+}
+
+/* Yellow - Under Observation / Inactive */
+.status-UnderObservation,
+.rem-status-Inactive {
+  color: #eab308;
+  font-weight: 700;
+  background-color: transparent;
+  text-shadow: 0 0 10px rgba(234, 179, 8, 0.8);
+}
+
+/* Blue - Reminder Completed */
+.rem-status-Completed {
+  color: #3b82f6;
+  font-weight: 700;
+  background-color: transparent;
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+}
+
+/* Red - Cancelled */
+.status-Cancelled {
+  color: #ef4444;
+  font-weight: 700;
+  background-color: transparent;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+.status-Dash {
+  color: var(--text-muted);
+  font-weight: 600;
+  background-color: transparent;
+}
+
+/* Crossed out & greyed out state ONLY when Status is "-" (except Status column) */
+.row-dash td:not(.cell-no):not(.td-status):not(.td-action) {
+  background-color: var(--readonly-bg);
+}
+
+.row-dash .cell-input,
+.row-dash .cell-textarea,
+.row-dash .priority-select {
+  text-decoration: line-through;
+  color: var(--text-muted) !important;
+  background-color: transparent !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+  opacity: 0.65;
+}
+
+.row-delete-btn {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: 100%;
+  height: var(--row-height);
+  line-height: var(--row-height);
+}
+
+.row-delete-btn:hover {
+  color: var(--danger);
+  background-color: rgba(239, 68, 68, 0.1);
+}
